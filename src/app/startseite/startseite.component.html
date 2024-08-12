@@ -1,0 +1,21 @@
+<div class="d-flex wrapper">
+  <div class="page-content-wrapper">
+    <div class="container-fluid main">
+      <h3>Produkt prüfen</h3>
+      <div class="row">
+        <div class="input-group">
+          <input id="field" [(ngModel)]="searchTerm" type="text" class="form-control" placeholder="Produkt suchen"
+            name="product">
+          <div class="input-group-append">
+            <button class="input-group-text"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+      <p>
+        <app-product [productName]="searchTerm"></app-product>
+        <img *ngIf="!searchTerm" src="assets/img/hilfsvideo.PNG" title="Wie funktioniert Foodprint"
+          alt="Wie funktioniert FoodPrint" style="width:40%; margin-top: 3%;" /> <br />
+      </p>
+    </div>
+  </div>
+</div>

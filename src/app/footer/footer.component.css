@@ -1,0 +1,15 @@
+footer {
+  position: fixed;
+  text-align: right;
+  margin-top: 15px;
+  bottom: 0;
+  width: 100%;
+  line-height: 35px;
+  background-color:rgb(185,215,223);
+}
+
+.footer a {
+  color: black;
+  font-size: 12px;
+  cursor: pointer;
+}

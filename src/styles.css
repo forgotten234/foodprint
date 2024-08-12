@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.wrapper {
+    overflow-x: hidden;
+ }
+
+#page-content{
+  min-width: 100vw;
+}
+
+app-root {
+  display: block;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* colors */
+
+.foodprint-blue {
+  color:#002F91;
+}
+
+.foodprint-green {
+  color:#00AD00 ;
+}
+
+.foodprint-red {
+  color: #C00000;
+}

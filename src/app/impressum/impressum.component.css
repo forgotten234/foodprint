@@ -1,0 +1,21 @@
+div{
+    text-align: center;
+    padding-top: 150px;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+#angaben{
+    font-style: italic;
+}
+a{
+    text-decoration: underline;
+    color: blue;
+}
+a:hover{
+    color:rgb(185,215,223);
+    cursor: pointer;
+}
+a:visited{
+    color: black;
+}

@@ -1,0 +1,11 @@
+.main {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 110px
+}
+
+.main .input-group {
+  width: 50%;
+  padding-top: 20px;
+  margin: auto;
+}

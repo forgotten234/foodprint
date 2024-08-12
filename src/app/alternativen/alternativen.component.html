@@ -1,0 +1,43 @@
+<br/>
+<div *ngIf="isLoaded">
+  <div class="container overview">
+    <div class="card">
+      <h3>Nachhaltige Alternativen:</h3>
+      <div class="row justify-content-center">
+        <div class="col-sm-3 card item" *ngFor="let product of similarProducts;" routerLink='/produktdetails/{{product.payload.doc.data().productID}}'>
+          <div class="text-muted score"> Score:
+            <span
+              *ngFor="let item of starScore(product.payload.doc.data().foodPrintScore); let i = index;"> <i
+                class="fa fa-star scoreyellow"></i> 
+            </span>
+            <span *ngFor="let item of reminderStar(product.payload.doc.data().foodPrintScore); let i = index;"> <i
+              class="fa fa-star"> </i>
+            </span>
+          </div>
+          <div class="text-muted score">
+            <span> 
+              <img [ngClass]="{'no-score-of-score': !product.payload.doc.data().co2Emissions}" title="CO2-Emissionen" src="/assets/img/co2.svg" /> 
+            </span>
+            <span> 
+              <img [ngClass]="{'no-score-of-score': !product.payload.doc.data().waterUseml}" title="Wasserverbrauch" src="/assets/img/wateruse.svg" /> 
+            </span>
+            <span> 
+              <img [ngClass]="{'no-score-of-score': product.payload.doc.data().packageTyp == 'ohne'}" title="Verpackung" src="/assets/img/package.svg" /> 
+            </span>
+            <span> 
+              <img [ngClass]="{'no-score-of-score': !product.payload.doc.data().regionofOrigin}" title="Herkunftsland" src="/assets/img/regionoforigin.svg" /> 
+            </span>
+            <span>
+              <img [ngClass]="{'no-score-of-score': !product.payload.doc.data().eigenschaft[0]}" title="Zertifizierung" src="/assets/img/certificate.svg" /> 
+            </span>
+          </div>
+          <div class="mr-2 centered">
+            <div><img [src]="product.payload.doc.data().productImageURL"></div>
+            <div>{{product.payload.doc.data().productTitle}}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="similarProducts.length === 0" class="no-items centered">Keine Alternativen gefunden</div>
+    </div>
+   </div>
+</div>

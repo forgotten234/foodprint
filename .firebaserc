@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "foodprint-htw-berlin-de",
+    "production": "foodprint-htw-berlin-de"
+  }
+}

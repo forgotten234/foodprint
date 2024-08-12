@@ -1,0 +1,27 @@
+.btn{
+    margin-top: 140px;
+    margin-left: 12%;
+    width: 200px;
+}
+
+.card{
+    margin: 20px;
+}
+
+a{
+    color: rgb(206, 35, 35);
+    border: solid 1px black;
+}
+a:hover{ 
+    cursor: pointer;
+}
+
+.icons{
+    width: 30px;
+    height: 30px;
+}
+.wert{
+    margin-left: 5px;
+}
+
+

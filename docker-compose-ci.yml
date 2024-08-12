@@ -1,0 +1,18 @@
+# create node service
+node:
+  build: "."
+
+  privileged: "true"
+  # set user to "node"
+  user: "node"
+    
+  # change default working directory
+  working_dir: "/home/node"
+
+  # options for log file
+  log_opt:
+    max-size: "200k"
+    max-file: "10"
+
+  # keeps container running
+  tty: "true"

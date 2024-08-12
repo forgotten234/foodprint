@@ -1,0 +1,155 @@
+<div class="container">
+  <div class="row center-card" *ngIf="(filteredProductList | filterPipe: productName).length >= 0 && productName">
+    <div class="col-md-7 results">Ergebnisse: {{(filteredProductList | filterPipe: productName).length}}</div>
+    <div class="input-group col-md-4">
+      <select class="form-control" id="sellectSortField" [(ngModel)]="selectedField">
+        <option value="" disabled selected>Sortieren nach...</option>
+        <option value="productTitle">Produkttitel</option>
+        <option value="nahrungsmittelTyp">Nahrungsmitteltyp</option>
+        <option value="regionofOrigin">Herkunftsland</option>
+        <option value="foodPrintScore">FoodPrint-Score</option>
+        <option value="productPreis">Preis</option>
+        <option value="co2Emissions">CO2-Emissionen</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-light" [disabled]="!selectedField" (click)="sort(filteredProductList, true)"><i
+            class="fa fa-sort-alpha-asc"></i></button>
+        <button class="btn btn-light" [disabled]="!selectedField" (click)="sort(filteredProductList, false)"><i
+            class="fa fa-sort-alpha-desc"></i></button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-3" style="margin-top: 10px;"
+      *ngIf="(filteredProductList | filterPipe: productName).length >= 0 && productName">
+      <div class="card card-body">
+        <h6 class="ta-left">Nachhaltigkeitskriterien</h6>
+        <div class="form-check ta-left" *ngFor="let cat of categories">
+          <label class="form-check-label">
+            <input type="checkbox" (change)="filterList()" value="{{cat.name}}" class="form-check-input"
+              [(ngModel)]="cat.checked">{{cat.name}}
+          </label>
+        </div>
+        <hr>
+        <h6 class="ta-left">Preis:</h6>
+        <div class="form-group">
+          <input type="number" [(ngModel)]="minPrice" placeholder="min" (change)="filterList()" class="form-control"
+            id="minPrice" required>
+          <input type="number" [(ngModel)]="maxPrice" placeholder="max" (change)="filterList()" class="form-control"
+            id="maxPrice" required>
+          <div class="validate-message ta-left" *ngIf="!validate">Min < Max</div>
+          </div>
+          <hr>
+          <h6 class="ta-left">Score:</h6>
+          <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+            <input type="radio" id="star1" name="rating" value="5" (click)="filterList($event)" /><label
+              for="star1"></label>
+            <input type="radio" id="star2" name="rating" value="4" (click)="filterList($event)" /><label
+              for="star2"></label>
+            <input type="radio" id="star3" name="rating" value="3" (click)="filterList($event)" /><label
+              for="star3"></label>
+            <input type="radio" id="star4" name="rating" value="2" (click)="filterList($event)" /><label
+              for="star4"></label>
+            <input type="radio" id="star5" name="rating" value="1" (click)="filterList($event)" /><label
+              for="star5"></label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div *ngIf="(filteredProductList | filterPipe: productName).length > 0 && productName">
+          <div *ngFor="let product of filteredProductList | filterPipe: productName" class="center-card">
+            <div class="card card-body">
+              <div class="media align-items-center text-lg-left">
+                <div class="mr-2"><img [src]="product.productImageURL"></div>
+                <div class="media-body">
+
+                  <!-- right section-->
+                  <div class="rightbox">
+                    <div class="text-center">
+                      <div class="text-muted"> Score: <span
+                          *ngFor="let item of starScore(product.foodPrintScore); let i = index;"> <i
+                            class="fa fa-star scoreyellow"> </i>
+                        </span>
+                        <span *ngFor="let item of reminderStar(product.foodPrintScore); let i = index;"> <i
+                            class="fa fa-star"> </i>
+                        </span>
+                      </div>
+                      <div class="text-muted score">
+                        <span>
+                          <img [ngClass]="{'no-score-of-score': !product.co2Emissions}" title="CO2-Emissionen"
+                            src="/assets/img/co2.svg" /> </span>
+                        <span>
+                          <img [ngClass]="{'no-score-of-score': !product.waterUseml}" title="Wasserverbrauch"
+                            src="/assets/img/wateruse.svg" /> </span>
+                        <span>
+                          <img [ngClass]="{'no-score-of-score': product.packageTyp == 'ohne'}" title="Verpackung"
+                            src="/assets/img/package.svg" /> </span>
+                        <span>
+                          <img [ngClass]="{'no-score-of-score': !product.regionofOrigin}" title="Herkunftsland"
+                            src="/assets/img/regionoforigin.svg" /> </span>
+                        <span>
+                          <img [ngClass]="{'no-score-of-score': !product.eigenschaft[0]}" title="Zertifizierung"
+                            src="/assets/img/certificate.svg" /> </span>
+                      </div>
+
+                      <div class="text-center">
+                        <h3 class="mb-0 font-weight-semibold">{{product.productPreis}} €</h3>
+                      </div>
+                      <div>
+                        <a routerLink="/produktdetails/{{product.productID}}"><button
+                            class="btn btn-light details">Detailansicht <i
+                              class="fa fa-arrow-circle-o-right"></i></button></a>
+                      </div>
+                    </div>
+                    <div class="compare-box">
+                      <div *ngIf="selectedCounter === 3 && !selectedProducts.includes(product);else notDisabled">
+                        <input type="checkbox" name="checkboxForOverview" value="Vergleichen" class="larger" disabled />
+                        <span>Vergleichen</span>
+                      </div>
+                      <ng-template #notDisabled>
+                        <input type="checkbox" name="checkboxForOverview" value="Vergleichen" class="larger"
+                          (change)="onChange(product, $event.target.checked)" />
+                        <span>Vergleichen</span>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div *ngIf="selectedCounter > 1" class="compare-button">
+                    <button type="button" class="btn btn-info" (click)="onClick()"
+                      routerLink="/produktdetails/vergleichen">Produkte
+                      vergleichen</button>
+                  </div>
+
+                  <!-- left section-->
+                  <div class="leftbox">
+
+                    <h4>{{product.productTitle}}</h4>
+
+                    <ul class="list-inline mb-lg-2">
+                      <li class="list-inline-item">{{product.nahrungsmittelTyp}}</li>
+                    </ul>
+                    <ul class="list-inline mb-0" *ngIf="product.packageTyp">
+                      <li class="list-inline-item">Verpackung: <span
+                          class="foodprint-blue">{{product.packageTyp}}</span></li>
+                    </ul>
+                    <ul class="list-inline mb-0" *ngIf="product.regionofOrigin">
+                      <li class="list-inline-item">Herkunftsland: <span
+                          class="foodprint-blue">{{product.regionofOrigin}}</span></li>
+                    </ul>
+                    <ul class="list-inline mb-0" *ngIf="product.co2Emissions">
+                      <li class="list-inline-item">CO2-Emissionen: <span class="foodprint-blue">{{product.co2Emissions}}
+                          g/kg</span></li>
+                    </ul>
+                    <ul class="list-inline mb-0">
+                      <li class="list-inline-item">Wasserverbrauch: <span class="foodprint-blue">{{product.waterUseml}}
+                          ml/kg</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="(productList | filterPipe: productName).length === 0 && productName" class="no-items">Keine Einträge
+          gefunden</div>
+      </div>

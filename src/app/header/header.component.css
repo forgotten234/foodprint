@@ -1,0 +1,17 @@
+.navbar {
+  padding: 18px;
+  background-color:rgb(185,215,223);
+  border-bottom: 1px solid #dee2e6;
+}
+
+.navbar a {
+  color: black;
+}
+
+.navbar a:hover {
+  color:  rgb(78, 74, 74);
+}
+
+.navbar i.fa {
+  margin-right: 10px;
+}

@@ -1,0 +1,127 @@
+<div class="container main">
+    <h3>Produktvergleich:</h3>
+    <div class="row">
+        <div>
+            <button class="btn btn-light details" (click)="goBack()"><i class="fa fa-arrow-circle-o-left"></i>
+                Zurück zu den Ergebnissen</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"> &nbsp;</th>
+                    <th *ngFor="let product of products" scope="col">
+                        <div class="row-title">{{product.productTitle}}</div>
+                        <div class="row-picture"><img [src]="product.productImageURL"></div>
+                        <div class="text-muted score">
+                            Score:
+                            <span *ngFor="let item of starScore(product.foodPrintScore); let i = index;">
+                                <i class="fa fa-star scoreyellow"></i>
+                            </span>
+                            <span *ngFor="let item of reminderStar(product.foodPrintScore); let i = index;">
+                                <i class="fa fa-star"> </i>
+                            </span>
+                        </div>
+                        <div class="text-muted score">
+                            <span>
+                                <img [ngClass]="{'no-score-of-score': !product.co2Emissions}" title="CO2-Emissionen"
+                                    src="/assets/img/co2.svg" />
+                            </span>
+                            <span>
+                                <img [ngClass]="{'no-score-of-score': !product.waterUseml}" title="Wasserverbrauch"
+                                    src="/assets/img/wateruse.svg" />
+                            </span>
+                            <span>
+                                <img [ngClass]="{'no-score-of-score': product.packageTyp == 'ohne'}" title="Verpackung"
+                                    src="/assets/img/package.svg" />
+                            </span>
+                            <span>
+                                <img [ngClass]="{'no-score-of-score': !product.regionofOrigin}" title="Herkunftsland"
+                                    src="/assets/img/regionoforigin.svg" />
+                            </span>
+                            <span>
+                                <img [ngClass]="{'no-score-of-score': !product.eigenschaft[0]}" title="Zertifizierung"
+                                    src="/assets/img/certificate.svg" />
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" class="column">Nahrungsmitteltyp</th>
+                    <td *ngFor="let product of products" class="column">
+                        {{product.nahrungsmittelTyp}}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="column">Preis</th>
+                    <td *ngFor="let product of products" class="column">
+                        {{product.productPreis}} €
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Nachhaltigkeit:</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row" class="score column">
+                        <img class="icons" title="Herkunftsland" src="/assets/img/regionoforigin.svg" />
+                        <a routerLink='/nscore' fragment="herkunft">Herkunft</a>
+                    </th>
+                    <td *ngFor="let product of products"
+                        [ngClass]="{'no-score-of-score': !product.regionofOrigin, 'perfect-value': product.regionofOrigin == 'Deutschland'}">
+                        {{product.regionofOrigin}}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="score column">
+                        <img class="icons" src="/assets/img/package.svg">
+                        <a routerLink='/nscore' fragment="verpackung">Verpackung</a>
+                    </th>
+                    <td *ngFor="let product of products" class="column"
+                        [ngClass]="{'no-score-of-score': product.packageTyp == 'ohne', 'perfect-value': product.packageTyp == 'ohne'}">
+                        {{product.packageTyp}}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="score column">
+                        <img class="icons" src="/assets/img/co2.svg">
+                        <a routerLink='/nscore' fragment="fußc">CO2-Ausstoß</a>
+                    </th>
+                    <td *ngFor="let product of products" class="column"
+                        [ngClass]="{'no-score-of-score': !product.co2Emissions, 'perfect-value': product.co2Emissions <= 0.5}">
+                        {{product.co2Emissions}} g/kg
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="score column">
+                        <img class="icons" src="/assets/img/certificate.svg">
+                        <a routerLink='/nscore' fragment="zerti">Besonderheiten</a>
+                    </th>
+                    <td *ngFor="let product of products" class="column"
+                        [ngClass]="{'no-score-of-score': !product.eigenschaft[0], 'perfect-value': product.eigenschaft != !product.eigenschaft[0]}">
+                        {{product.eigenschaft}}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="score column">
+                        <img class="icons" src="/assets/img/wateruse.svg">
+                        <a routerLink='/nscore' fragment="fußw">Wasserverbrauch</a>
+                    </th>
+                    <td *ngFor="let product of products" class="column"
+                        [ngClass]="{'no-score-of-score': !product.waterUseml, 'perfect-value': product.waterUseml <= 1000}">
+                        {{product.waterUseml}} ml/kg
+                    </td>
+                </tr>
+            </tbody>
+            <div>
+                <span style='text-align: left'><img class="icons" src="/assets/img/fleck_gruen.png">= Volle Punktzahl</span>
+            </div>
+            <div>
+                <span style='text-align: left'><img class="icons" src="/assets/img/fleck_grau.png">= Keine Informationen</span>
+            </div>
+        </table>
+    </div>
+</div>

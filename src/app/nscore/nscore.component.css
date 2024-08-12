@@ -1,0 +1,93 @@
+nav {
+    float: left;
+    padding-top: 25px;
+    margin-right: 10px;
+    height: 150px;
+}
+
+aside {
+    float: right;
+    padding-left: 10px;
+
+}
+section {
+    color: black;
+    padding-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 90px;
+    text-align: justify;
+}
+div{
+    padding-top: 80px;
+    margin: 50px 20px;
+}
+h1{
+    margin-top: 40px;
+}
+.no-score-of-score {
+    filter: invert(.5);
+  }
+p{
+    text-align: justify;
+}
+table, th, td { 
+    border: 1px solid black;
+    text-align: center;
+    width: 500px;
+}
+img{
+    height: 100px;
+    width: 100px;
+    border-radius: 15px;
+}
+.bildsw{
+    filter: invert(.5);  
+}
+.breit{
+    width: 250px;
+}
+.klein{
+    width: 150px;
+}
+.herkunft{
+    background-color: rgb(188, 246, 141);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;}
+.verpackung{
+    background-color: rgb(246, 218, 141);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.fußc{
+    background-color: rgb(255, 116, 116);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.fußw{
+    background-color: rgb(47, 113, 255);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.zerti{
+    background-color: rgb(240, 200, 137);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.fehlendedaten{
+    background-color: rgb(131, 131, 131);
+    font-variant: small-caps ;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}

@@ -1,0 +1,83 @@
+# gitlab-ci.yml
+
+# scripts that will be executed before every stages scripts, except when before_script is defined
+before_script:
+  - docker info
+  # rename docker-compose file for ci
+  - mv docker-compose-ci.yml docker-compose.yml
+  # start docker-compose
+  - docker-compose -p $CI_JOB_ID up -d 
+   
+# scripts that will be executed after every stages scripts, except when after_script is defined
+after_script:
+  - docker-compose -p $CI_JOB_ID down
+
+# define stages
+stages:
+  - test
+  - build
+  - deploy
+
+#lint
+lint:
+  stage: test
+  environment:
+    name: ci
+  script:
+    - docker-compose -p $CI_JOB_ID exec -T -u node node npm run lint
+   
+  timeout: 10 minutes
+    
+# karma /Test
+karma:
+  stage: test
+  environment:
+    name: ci
+  script:
+    - docker-compose -p $CI_JOB_ID exec -T -u node node npm run test
+    
+  timeout: 10 minutes
+
+# build
+build-production:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  script:
+    #Build App
+    - docker-compose -p $CI_JOB_ID exec -T -u node node npm run build
+  artifacts:
+    paths:
+        # Build folder
+        - dist/foodprint
+    expire_in: 30 minutes
+
+#build+deploy
+deploy-production:
+  stage: deploy
+  script:
+      #Build App
+      - docker-compose -p $CI_JOB_ID exec -T -u node node npm run build
+      # - npm install -g firebase-tools
+      - docker-compose -p $CI_JOB_ID exec -T -u node node firebase use --token $FIREBASE_TOKEN production
+      # deploy to firebase hosting
+      - docker-compose -p $CI_JOB_ID exec -T -u node node firebase deploy --only hosting -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_TOKEN
+  rules:
+      - if: $CI_COMMIT_BRANCH == "master"    
+  artifacts:
+    paths:
+      # Build folder
+      - dist/foodprint
+    expire_in: 30 minutes
+
+
+
+# deploy-production:
+#  stage: deploy
+#  environment:
+#    name: production
+#  script:
+#   # TODO
+#  when: on_success
+#  only:
+#   - master

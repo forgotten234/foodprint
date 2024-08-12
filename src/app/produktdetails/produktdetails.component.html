@@ -1,0 +1,90 @@
+<div id="top"></div>
+<div *ngIf="product">
+    <div class="container">
+        <div class="row">
+            <div>
+                <button class="btn btn-light details" (click)="goBack()"><i class="fa fa-arrow-circle-o-left"></i>
+                    Zurück zu den Ergebnissen</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img [src]="product.productImageURL" class="card-img-top" alt="...">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-text-lg-left">
+                    <div class="card-body">
+                        <h2 class="card-title" style="font-weight: 900;">{{product.productTitle}}</h2>
+                        <div class="text-muted"> Score: <span
+                                *ngFor="let item of starScore(product.foodPrintScore); let i = index;"> <i
+                                    class="fa fa-star" style="color: rgb(240, 218, 22);"> </i>
+                            </span>
+                            <span *ngFor="let item of reminderStar(product.foodPrintScore); let i = index;"> <i
+                                    class="fa fa-star" style="color: lightgray;"> </i>
+                            </span>
+                        </div><br>
+
+                        <div>
+                            <p *ngIf="product.productPreis">
+                                Preis: {{product.productPreis}} €
+                            </p>
+                            <p *ngIf="product.nahrungsmittelTyp">
+                                Nahrungsmitteltyp: {{product.nahrungsmittelTyp}}
+                            </p>
+                            <p *ngIf="product.Marke">
+                                Produktmarke: {{product.Marke}}
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title">Nachhaltigkeitskriterien</h3>
+                        <a routerLink="/nscore" style="margin: 20px;">Informationen zu unserem Nachhaltigkeitsscore</a>
+                        <div class="card-text" style="text-align: left; margin-top: 15px;">
+                            <p>
+                                <span class="image"><img class="icons" src="/assets/img/regionoforigin.svg">
+                                    Herkunft:</span>
+                                <span class="wert"
+                                    *ngIf="product.regionofOrigin; else keineInfo">{{product.regionofOrigin}}
+                                </span>
+                            </p>
+                            <p>
+                                <span class="image"><img class="icons" src="/assets/img/package.svg"> Verpackung:</span>
+                                <span class="wert"
+                                    *ngIf="product.packageTyp; else keineInfo">{{product.packageTyp}}</span>
+                            </p>
+                            <p> <span class="image"><img class="icons" src="/assets/img/co2.svg"> CO2-Ausstoß:</span>
+                                <span class="wert" *ngIf="product.co2Emissions; else keineInfo">{{product.co2Emissions}}
+                                    g/kg</span>
+                            </p>
+                            <p>
+                                <span class="image"><img class="icons" src="/assets/img/wateruse.svg">
+                                    Wasserverbrauch:</span>
+                                <span class="wert" *ngIf="product.waterUseml; else keineInfo">{{product.waterUseml}}
+                                    ml/kg</span>
+                            </p>
+                            <p><span class="image"><img class="icons" src="/assets/img/certificate.svg">
+                                    Besonderheiten:</span>
+                                <span class="wert"
+                                    *ngIf="product.eigenschaft; else keineInfo">{{product.eigenschaft}}</span>
+                            </p>
+                            <ng-template #keineInfo>keine Informationen</ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-alternativen [product]="product"></app-alternativen>
+    </div>
+    <ng-template #loading>Loading User Data...</ng-template>
